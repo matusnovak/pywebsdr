@@ -17,7 +17,7 @@ class Worker(object):
             if len(self.packets) > 0:
                 conn = numpy.concatenate(self.packets)
                 self.packets = []
-                print 'conn: ' + str(len(conn))
+                #print 'conn: ' + str(len(conn))
                 self.socketio.emit(u'stream', {'pcm': conn.tobytes()}, namespace='/listen')
             eventlet.sleep(1)
 

@@ -43,9 +43,10 @@ export default {
     onSubmit() {
       if (this.frequencyValue > this.frequencyRange.max / 1000.0) this.freq = this.frequencyRange.max / 1000.0
       if (this.frequencyValue < this.frequencyRange.min / 1000.0) this.freq = this.frequencyRange.min / 1000.0
-      /*if (this.socket) {
-        this.socket.emit('control', {'frequency': this.frequencyValue * 1000.0})
-      }*/
+
+      this.$http.post('/rest/device/control', {frequency: this.frequencyValue * 1000.0}).catch(err => {
+        this.$emit('error', err.message)
+      })
     }
   },
   mounted() {

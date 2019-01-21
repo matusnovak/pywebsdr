@@ -63,6 +63,18 @@ def stop_listen():
         device = None
     return ok({'message': 'Device stopped'})
 
+@app.route('/rest/device/control', methods=['POST'])
+def control_listen():
+    global radio, device
+    body = request.json
+    if radio is not None:
+        for key, value in body.iteritems():
+            if key == 'frequency':
+                device.frequency = value
+            if key == 'gain':
+                device.gain = value
+    return ok({})
+
 @app.route('/rest/device/list', methods=['GET'])
 def rest_get_devices():
     return ok(DEVICE_DRIVERS.keys())

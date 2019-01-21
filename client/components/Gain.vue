@@ -45,13 +45,13 @@ export default {
         return value
       })
 
-      if (this.socket) {
-        const gain = {}
-        this.values.map(value => {
-          gain[value.name] = parseInt(value.value)
-        })
-        //this.socket.emit('control', {'gain': gain})
-      }
+      const gain = {}
+      this.values.map(value => {
+        gain[value.name] = parseInt(value.value)
+      })
+      this.$http.post('/rest/device/control', {gain: gain}).catch(err => {
+        this.$emit('error', err.message)
+      })
     }
   },
   mounted() {
